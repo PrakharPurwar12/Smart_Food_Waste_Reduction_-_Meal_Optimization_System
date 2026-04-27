@@ -61,14 +61,3 @@ SECRET_KEY=your_secret_key_here
 ALLOWED_HOSTS=localhost,127.0.0.1
 CORS_ALLOWED_ORIGINS=http://localhost:5173
 ```
-
-## 🔒 Security Best Practices
-- The repository uses a strict `.gitignore` to prevent sensitive data (`.env`, `db.sqlite3`, `__pycache__`) from leaking.
-- All backend routes are protected via JWT.
-- Multi-tenant logic ensures users can only access data relevant to their registered institution.
-
-## 🤝 Contributing
-Contributions are welcome! Please create an issue or submit a pull request with your changes.
-
-## 📄 License
-This project is licensed under the MIT License.
