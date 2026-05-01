@@ -33,8 +33,9 @@ University and corporate messes face a significant challenge: **food waste**. Wi
 - **Smart Cancellations:** Cancel or re-book meals with strict time-based restrictions (cancellations lock when the meal starts).
 
 #### 👨‍🍳 Kitchen Dashboard
-- **Live Attendance Stats:** Instantly view how many students have booked each meal for the day.
-- **Menu Management:** Publish and update specific menus for every meal, instantly visible to all students.
+- **Live Attendance Stats:** Instantly view how many students have booked each meal for any given day.
+- **Dynamic Calendar Management:** Seamlessly navigate between past, current, and future dates using a native calendar picker to manage schedules ahead of time.
+- **Menu Management:** Publish and update specific menus for every meal, ensuring real-time synchronization with the Student Portal.
 - **Data Export:** Download daily booking lists for offline record-keeping.
 
 ### 🔮 Coming Soon: AI Waste Prediction
