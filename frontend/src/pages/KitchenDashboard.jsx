@@ -12,22 +12,28 @@ const KitchenDashboard = () => {
   const [message, setMessage] = useState('');
 
   const getTodayStr = () => new Date().toLocaleDateString('en-CA');
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const [selectedDate, setSelectedDate] = useState(getTodayStr());
 
   const fetchData = async () => {
     setLoading(true);
     try {
-      const today = getTodayStr();
       const [statsRes, menuRes] = await Promise.all([
-        mealService.getMealStats(today),
-        mealService.getTodayMenu(today).catch(() => ({ success: false }))
+        mealService.getMealStats(selectedDate),
+        mealService.getTodayMenu(selectedDate).catch(() => ({ success: false }))
       ]);
 
       if (statsRes.success) setStats(statsRes.data);
-      if (menuRes.success) setMenu(menuRes.data);
+      else setStats({ breakfast: 0, lunch: 0, dinner: 0 });
+
+      if (menuRes.success && menuRes.data) {
+        setMenu({
+          breakfast: menuRes.data.breakfast || '',
+          lunch: menuRes.data.lunch || '',
+          dinner: menuRes.data.dinner || ''
+        });
+      } else {
+        setMenu({ breakfast: '', lunch: '', dinner: '' });
+      }
     } catch (err) {
       console.error('Failed to fetch kitchen data', err);
     } finally {
@@ -35,13 +41,17 @@ const KitchenDashboard = () => {
     }
   };
 
+  useEffect(() => {
+    fetchData();
+  }, [selectedDate]);
+
   const handleSaveMenu = async () => {
     setMenuSaving(true);
     setMessage('');
     try {
       const response = await mealService.uploadMenu({
         ...menu,
-        date: getTodayStr()
+        date: selectedDate
       });
       if (response.success) {
         setMessage('Menu updated successfully! ✔');
@@ -126,7 +136,14 @@ const KitchenDashboard = () => {
           <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
             <div className="flex items-center justify-between">
               <h3 className="font-bold text-slate-900 dark:text-white">Daily Menu</h3>
-              <Calendar size={18} className="text-slate-400" />
+              <div className="relative group cursor-pointer">
+                <input 
+                  type="date"
+                  value={selectedDate}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                  className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-1.5 text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-emerald-500 transition-all cursor-pointer shadow-sm hover:border-emerald-500 w-[140px]"
+                />
+              </div>
             </div>
             
             <div className="space-y-4">
