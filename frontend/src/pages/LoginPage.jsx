@@ -5,7 +5,7 @@ import Button from '../components/Button';
 import { useAuth } from '../hooks/AuthContext';
 
 const LoginPage = () => {
-  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [formData, setFormData] = useState({ username_or_email: '', password: '' });
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   
@@ -13,7 +13,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || (formData.email.includes('kitchen') ? '/kitchen/dashboard' : '/student/dashboard');
+  const from = location.state?.from?.pathname || (formData.username_or_email.includes('kitchen') ? '/kitchen/dashboard' : '/student/dashboard');
   const queryParams = new URLSearchParams(location.search);
   const isExpired = queryParams.get('expired') === 'true';
 
@@ -51,11 +51,11 @@ const LoginPage = () => {
         )}
         
         <Input 
-          label="Email Address" 
-          type="email" 
-          placeholder="name@university.edu"
-          value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          label="Username or Email" 
+          type="text" 
+          placeholder="Enter username or email"
+          value={formData.username_or_email}
+          onChange={(e) => setFormData({ ...formData, username_or_email: e.target.value })}
           required
           disabled={isLoading}
         />

@@ -2,7 +2,7 @@ import api from './api';
 
 export const bookMeal = (data) => api.post('meals/book/', data);
 
-export const getMyBookings = () => api.get('meals/my_bookings/');
+export const getMyBookings = (date) => api.get('meals/my_bookings/', { params: { date } });
 
 export const cancelBooking = (id) => api.patch(`meals/${id}/cancel/`);
 

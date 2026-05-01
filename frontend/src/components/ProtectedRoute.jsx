@@ -15,6 +15,11 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
+  // Redirect to select-college if user has no college assigned
+  if (!user.college && location.pathname !== '/select-college') {
+    return <Navigate to="/select-college" state={{ from: location }} replace />;
+  }
+
   if (allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
     // Role not authorized, redirect to home or a generic dashboard
     const defaultPath = user.role === 'kitchen' ? '/kitchen/dashboard' : '/student/dashboard';

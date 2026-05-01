@@ -11,6 +11,7 @@ const RegisterPage = React.lazy(() => import('../pages/RegisterPage'));
 const StudentDashboard = React.lazy(() => import('../pages/StudentDashboard'));
 const MealBookingPage = React.lazy(() => import('../pages/MealBookingPage'));
 const KitchenDashboard = React.lazy(() => import('../pages/KitchenDashboard'));
+const SelectCollegePage = React.lazy(() => import('../pages/SelectCollegePage'));
 
 const AppRoutes = () => {
   return (
@@ -23,6 +24,17 @@ const AppRoutes = () => {
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+        </Route>
+
+        {/* Protected - Select College */}
+        <Route 
+          element={
+            <ProtectedRoute>
+              <DashboardLayout role="student" />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="/select-college" element={<SelectCollegePage />} />
         </Route>
 
         {/* Student Routes (Protected) */}

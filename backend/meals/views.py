@@ -23,13 +23,23 @@ IST = pytz.timezone('Asia/Kolkata')
 def _can_cancel(booking) -> tuple[bool, str]:
     """
     Returns (allowed: bool, reason: str).
-    Cancel is allowed only if the current IST time is BEFORE the meal's start time.
+    Rules:
+    Past: cancel not allowed
+    Today: cancel only before meal start time
+    Future: cancel always allowed
     """
-    meal_start_hour, meal_start_min = MEAL_START_TIMES.get(booking.meal_type, (0, 0))
     now_ist = timezone.now().astimezone(IST)
-    booking_date = booking.date  # date object
+    today_date = now_ist.date()
+    booking_date = booking.date
 
-    # Build a timezone-aware datetime for the meal start in IST
+    if booking_date < today_date:
+        return False, "Cannot cancel bookings for past dates."
+    
+    if booking_date > today_date:
+        return True, ""
+
+    # If it's today
+    meal_start_hour, meal_start_min = MEAL_START_TIMES.get(booking.meal_type, (0, 0))
     meal_start = IST.localize(
         datetime(booking_date.year, booking_date.month, booking_date.day,
                  meal_start_hour, meal_start_min, 0)
@@ -38,6 +48,7 @@ def _can_cancel(booking) -> tuple[bool, str]:
     if now_ist >= meal_start:
         start_str = f"{meal_start_hour:02d}:{meal_start_min:02d}"
         return False, f"Cannot cancel after meal has started ({booking.meal_type.capitalize()} starts at {start_str})."
+    
     return True, ""
 
 
@@ -51,8 +62,6 @@ class MealBookingViewSet(viewsets.ModelViewSet):
             return [IsStudentOrKitchen()]
         if self.action in ['all_bookings', 'stats']:
             return [IsKitchen()]
-        # Raw CRUD (list/retrieve/update/destroy) requires auth;
-        # scoped by get_queryset so tenants cannot bleed.
         return [permissions.IsAuthenticated()]
 
     # ── Tenant-scoped queryset ───────────────────────────────────────────────
@@ -64,13 +73,15 @@ class MealBookingViewSet(viewsets.ModelViewSet):
         if not hasattr(user, 'role'):
             return MealBooking.objects.none()
 
-        if user.role == 'student':
-            # Students see ONLY their own bookings — no college filter needed
-            return MealBooking.objects.filter(user=user).order_by('-date', 'meal_type')
-
-        # Kitchen staff: scoped strictly to their college
+        # HARD SECURITY RULE
         if not user.college_id:
             return MealBooking.objects.none()
+
+        if user.role == 'student':
+            # Students see ONLY their own bookings
+            return MealBooking.objects.filter(user=user, user__college=user.college).order_by('-date', 'meal_type')
+
+        # Kitchen staff: scoped strictly to their college
         return (
             MealBooking.objects
             .filter(user__college=user.college)
@@ -85,6 +96,12 @@ class MealBookingViewSet(viewsets.ModelViewSet):
                 {"success": False, "error": "Only students can book meals."},
                 status=status.HTTP_403_FORBIDDEN
             )
+            
+        if not request.user.college_id:
+            return Response(
+                {"success": False, "error": "You must be assigned to a college to book meals."},
+                status=status.HTTP_403_FORBIDDEN
+            )
 
         meal_type = request.data.get('meal_type')
         if meal_type not in MEAL_START_TIMES:
@@ -93,7 +110,24 @@ class MealBookingViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        booking_date = request.data.get('date', timezone.now().astimezone(IST).date().isoformat())
+        booking_date_str = request.data.get('date', timezone.now().astimezone(IST).date().isoformat())
+        
+        try:
+            booking_date = datetime.strptime(booking_date_str, "%Y-%m-%d").date()
+        except ValueError:
+            return Response(
+                {"success": False, "error": "Invalid date format. Use YYYY-MM-DD."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        now_ist = timezone.now().astimezone(IST)
+        today_date = now_ist.date()
+
+        if booking_date < today_date:
+            return Response(
+                {"success": False, "error": "Cannot book meals for past dates."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         # Re-book or duplicate guard
         existing = MealBooking.objects.filter(
@@ -134,7 +168,25 @@ class MealBookingViewSet(viewsets.ModelViewSet):
     # ── My Bookings ───────────────────────────────────────────────────────────
     @action(detail=False, methods=['get'])
     def my_bookings(self, request):
+        if not request.user.college_id:
+            return Response(
+                {"success": False, "error": "You must be assigned to a college."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+            
         bookings = self.get_queryset()
+        
+        target_date = request.query_params.get('date')
+        if target_date:
+            try:
+                datetime.strptime(target_date, "%Y-%m-%d")
+                bookings = bookings.filter(date=target_date)
+            except ValueError:
+                return Response(
+                    {"success": False, "error": "Invalid date format."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+                
         serializer = self.get_serializer(bookings, many=True)
         return Response({"success": True, "data": serializer.data})
 
@@ -180,7 +232,7 @@ class MealBookingViewSet(viewsets.ModelViewSet):
         if not request.user.college_id:
             return Response(
                 {"success": False, "error": "Your account is not linked to a college."},
-                status=status.HTTP_400_BAD_REQUEST
+                status=status.HTTP_403_FORBIDDEN
             )
         target_date = request.query_params.get('date', timezone.now().astimezone(IST).date().isoformat())
         bookings = (
@@ -197,7 +249,7 @@ class MealBookingViewSet(viewsets.ModelViewSet):
         if not request.user.college_id:
             return Response(
                 {"success": False, "error": "Your account is not linked to a college."},
-                status=status.HTTP_400_BAD_REQUEST
+                status=status.HTTP_403_FORBIDDEN
             )
         target_date = request.query_params.get('date', timezone.now().astimezone(IST).date().isoformat())
         stats_data = (
@@ -231,10 +283,13 @@ class MessMenuViewSet(viewsets.ModelViewSet):
         return MessMenu.objects.filter(college=user.college).order_by('-date')
 
     def perform_create(self, serializer):
-        # Ignore any college sent by client; always use the authenticated user's college
+        if not self.request.user.college_id:
+            raise permissions.PermissionDenied("You must be assigned to a college.")
         serializer.save(college=self.request.user.college)
 
     def perform_update(self, serializer):
+        if not self.request.user.college_id:
+            raise permissions.PermissionDenied("You must be assigned to a college.")
         serializer.save(college=self.request.user.college)
 
     @action(detail=False, methods=['get'])
@@ -242,13 +297,13 @@ class MessMenuViewSet(viewsets.ModelViewSet):
         if not request.user.college_id:
             return Response(
                 {"success": False, "error": "Your account is not linked to a college."},
-                status=status.HTTP_400_BAD_REQUEST
+                status=status.HTTP_403_FORBIDDEN
             )
         target_date = request.query_params.get('date', timezone.now().astimezone(IST).date().isoformat())
         menu = MessMenu.objects.filter(college=request.user.college, date=target_date).first()
         if menu:
             return Response({"success": True, "data": self.get_serializer(menu).data})
         return Response(
-            {"success": False, "error": "No menu set for today."},
+            {"success": False, "error": f"No menu set for {target_date}."},
             status=status.HTTP_404_NOT_FOUND
         )
