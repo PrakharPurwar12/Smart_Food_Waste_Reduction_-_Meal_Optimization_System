@@ -11,6 +11,7 @@ const RegisterPage = React.lazy(() => import('../pages/RegisterPage'));
 const StudentDashboard = React.lazy(() => import('../pages/StudentDashboard'));
 const MealBookingPage = React.lazy(() => import('../pages/MealBookingPage'));
 const KitchenDashboard = React.lazy(() => import('../pages/KitchenDashboard'));
+const KitchenAnalytics = React.lazy(() => import('../pages/KitchenAnalytics'));
 const SelectCollegePage = React.lazy(() => import('../pages/SelectCollegePage'));
 
 const AppRoutes = () => {
@@ -58,6 +59,7 @@ const AppRoutes = () => {
           }
         >
           <Route path="/kitchen/dashboard" element={<KitchenDashboard />} />
+          <Route path="/kitchen/analytics" element={<KitchenAnalytics />} />
         </Route>
 
         {/* Fallback */}

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { login as apiLogin, register as apiRegister, logout as apiLogout } from '../services/authService';
 import api from '../services/api';
 
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       const message = error.response?.data?.error || error.message || 'Login failed';
-      throw new Error(message);
+      throw new Error(message, { cause: error });
     }
   };
 
@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       const message = error.response?.data?.error || error.message || 'Registration failed';
-      throw new Error(message);
+      throw new Error(message, { cause: error });
     }
   };
 

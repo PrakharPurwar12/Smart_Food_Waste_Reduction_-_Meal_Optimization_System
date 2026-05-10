@@ -6,8 +6,8 @@
   **A Next-Generation Food Waste Reduction & Meal Optimization Platform**
 
   <p align="center">
-    <a href="https://reactjs.org/"><img src="https://img.shields.io/badge/Frontend-React%2018-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React"></a>
-    <a href="https://www.djangoproject.com/"><img src="https://img.shields.io/badge/Backend-Django%205-092E20?style=for-the-badge&logo=django&logoColor=white" alt="Django"></a>
+    <a href="https://reactjs.org/"><img src="https://img.shields.io/badge/Frontend-React%2019-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React"></a>
+    <a href="https://www.djangoproject.com/"><img src="https://img.shields.io/badge/Backend-Django%206-092E20?style=for-the-badge&logo=django&logoColor=white" alt="Django"></a>
     <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/Styling-Tailwind%20v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS"></a>
     <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge" alt="License: MIT"></a>
   </p>
@@ -63,13 +63,13 @@ University and corporate dining facilities (messes) face a massive daily challen
 ## 🚀 Tech Stack
 
 ### Client
-* **React 18 (Vite):** Blazing fast frontend framework.
+* **React 19 (Vite):** Blazing fast frontend framework.
 * **Tailwind CSS v4:** Utility-first styling for a sleek, modern, glassmorphic UI.
 * **Recharts & Framer Motion:** Interactive data visualization and fluid micro-animations.
 * **Lucide React:** Clean, consistent iconography.
 
 ### Server
-* **Django 5.0:** Robust, secure Python web framework.
+* **Django 6:** Robust, secure Python web framework.
 * **Django REST Framework:** Scalable and flexible API architecture.
 * **SimpleJWT:** Stateless, secure JSON Web Token authentication.
 * **SQLite / PostgreSQL:** Flexible database layer supporting both rapid development and production scaling.

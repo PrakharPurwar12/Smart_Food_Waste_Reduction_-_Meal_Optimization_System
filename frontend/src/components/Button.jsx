@@ -1,7 +1,14 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 
-const Button = ({ children, variant = 'primary', className = '', isLoading = false, ...props }) => {
+const Button = ({
+  children,
+  variant = 'primary',
+  className = '',
+  isLoading = false,
+  icon,
+  rightIcon,
+  ...props
+}) => {
   const variants = {
     primary: 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm shadow-emerald-500/20',
     secondary: 'bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-900 dark:text-slate-100',
@@ -24,7 +31,13 @@ const Button = ({ children, variant = 'primary', className = '', isLoading = fal
           </svg>
           <span>Loading...</span>
         </>
-      ) : children}
+      ) : (
+        <>
+          {icon && <span className="shrink-0">{icon}</span>}
+          <span>{children}</span>
+          {rightIcon && <span className="shrink-0">{rightIcon}</span>}
+        </>
+      )}
     </motion.button>
   );
 };

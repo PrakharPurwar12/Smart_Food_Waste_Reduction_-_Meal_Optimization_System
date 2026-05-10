@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Input from '../components/Input';
 import Button from '../components/Button';
@@ -13,7 +13,6 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || (formData.username_or_email.includes('kitchen') ? '/kitchen/dashboard' : '/student/dashboard');
   const queryParams = new URLSearchParams(location.search);
   const isExpired = queryParams.get('expired') === 'true';
 
