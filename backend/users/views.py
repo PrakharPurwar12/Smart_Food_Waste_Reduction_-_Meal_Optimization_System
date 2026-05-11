@@ -12,7 +12,7 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
     def get_permissions(self):
-        if self.action in ['register', 'login']:
+        if self.action in ['register', 'login', 'forgot_password', 'reset_password']:
             return [permissions.AllowAny()]
         if self.action in ['me', 'set_college']:
             return [permissions.IsAuthenticated()]
@@ -100,3 +100,46 @@ class UserViewSet(viewsets.ModelViewSet):
             "success": True,
             "data": UserSerializer(request.user).data
         })
+
+    @action(detail=False, methods=['post'])
+    def forgot_password(self, request):
+        email = request.data.get('email')
+        if not email:
+            return Response({'success': False, 'error': 'Email is required'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        user = User.objects.filter(email=email).first()
+        if user:
+            from .models import PasswordResetToken
+            token = PasswordResetToken.generate_token(user)
+            print(f"\n======================================")
+            print(f" PASSWORD RESET OTP FOR {email}: {token.otp}")
+            print(f"======================================\n")
+            
+        return Response({'success': True, 'message': 'If an account with this email exists, a password reset OTP has been sent.'})
+
+    @action(detail=False, methods=['post'])
+    def reset_password(self, request):
+        email = request.data.get('email')
+        otp = request.data.get('otp')
+        new_password = request.data.get('new_password')
+
+        if not all([email, otp, new_password]):
+            return Response({'success': False, 'error': 'Email, OTP, and new password are required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user = User.objects.filter(email=email).first()
+        if not user:
+            return Response({'success': False, 'error': 'Invalid request'}, status=status.HTTP_400_BAD_REQUEST)
+
+        from .models import PasswordResetToken
+        token = PasswordResetToken.objects.filter(user=user, otp=otp, is_used=False).first()
+
+        if not token or not token.is_valid():
+            return Response({'success': False, 'error': 'Invalid or expired OTP'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user.set_password(new_password)
+        user.save()
+        
+        token.is_used = True
+        token.save()
+
+        return Response({'success': True, 'message': 'Password has been reset successfully.'})

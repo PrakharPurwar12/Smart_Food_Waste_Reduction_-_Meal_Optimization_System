@@ -8,6 +8,8 @@ import ProtectedRoute from '../components/ProtectedRoute';
 const LandingPage = React.lazy(() => import('../pages/LandingPage'));
 const LoginPage = React.lazy(() => import('../pages/LoginPage'));
 const RegisterPage = React.lazy(() => import('../pages/RegisterPage'));
+const ForgotPasswordPage = React.lazy(() => import('../pages/ForgotPasswordPage'));
+const ResetPasswordPage = React.lazy(() => import('../pages/ResetPasswordPage'));
 const StudentDashboard = React.lazy(() => import('../pages/StudentDashboard'));
 const MealBookingPage = React.lazy(() => import('../pages/MealBookingPage'));
 const KitchenDashboard = React.lazy(() => import('../pages/KitchenDashboard'));
@@ -24,6 +26,8 @@ const AppRoutes = () => {
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
         </Route>
 
         {/* Protected - Select College */}

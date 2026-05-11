@@ -5,4 +5,6 @@ export const register = (data) => api.post('auth/register/', data);
 export const logout = () => {
   localStorage.removeItem('token');
 };
-export const setCollege = (data) => api.post('users/set-college/', data);
+export const setCollege = (data) => api.post('auth/set-college/', data);
+export const forgotPassword = (data) => api.post('auth/forgot-password/', data);
+export const resetPassword = (data) => api.post('auth/reset-password/', data);

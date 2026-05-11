@@ -16,6 +16,7 @@ const LoginPage = () => {
   const from = location.state?.from?.pathname || (formData.username_or_email.includes('kitchen') ? '/kitchen/dashboard' : '/student/dashboard');
   const queryParams = new URLSearchParams(location.search);
   const isExpired = queryParams.get('expired') === 'true';
+  const message = location.state?.message;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,6 +41,11 @@ const LoginPage = () => {
       {isExpired && (
         <div className="mb-6 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 text-sm text-center">
           Your session has expired. Please login again.
+        </div>
+      )}
+      {message && (
+        <div className="mb-6 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm text-center">
+          {message}
         </div>
       )}
       
@@ -78,7 +84,7 @@ const LoginPage = () => {
             />
             Remember me
           </label>
-          <a href="#" className="text-blue-400 hover:underline">Forgot password?</a>
+          <Link to="/forgot-password" className="text-blue-400 hover:underline">Forgot password?</Link>
         </div>
 
         <Button 
