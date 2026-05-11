@@ -1,0 +1,61 @@
+date,week,day,meal_type,menu,predicted_students,actual_students,waste_kg,popularity_score,is_weekend,is_exam,is_festival
+2026-01-06,A,Tuesday,breakfast,"Idli Sambhar, Coconut Chutney, Chai",216,224,1.8,8.1,False,False,False
+2026-01-06,A,Tuesday,lunch,"Rice, Moong Dal, Bhindi Masala, Roti, Salad",238,231,5.4,7.6,False,False,False
+2026-01-06,A,Tuesday,snacks,"Bread Pakora, Green Chutney, Chai",168,176,1.1,8.0,False,False,False
+2026-01-06,A,Tuesday,dinner,"Rice, Chole, Jeera Rice, Roti, Salad",246,253,2.2,8.4,False,False,False
+2026-01-07,A,Wednesday,breakfast,"Aloo Paratha, Dahi, Pickle, Chai",238,247,1.7,8.8,False,False,False
+2026-01-07,A,Wednesday,lunch,"Rice, Arhar Dal, Mix Veg, Roti, Salad, Papad",252,258,2.4,8.2,False,False,False
+2026-01-07,A,Wednesday,snacks,"Veg Cutlet, Tamarind Chutney, Chai",181,188,1.0,8.3,False,False,False
+2026-01-07,A,Wednesday,dinner,"Rice, Dal Makhani, Paneer Bhurji, Roti, Raita",270,282,1.6,9.0,False,False,False
+2026-01-08,A,Thursday,breakfast,"Upma, Boiled Eggs, Bread Butter, Chai",206,198,4.3,7.2,False,False,False
+2026-01-08,A,Thursday,lunch,"Rice, Chana Dal, Lauki Sabzi, Roti, Salad",230,219,6.7,6.9,False,False,False
+2026-01-08,A,Thursday,snacks,"Aloo Tikki, Mint Chutney, Chai",158,164,0.9,7.8,False,False,False
+2026-01-08,A,Thursday,dinner,"Rice, Kadhi Pakora, Jeera Aloo, Roti, Papad",236,229,4.1,7.5,False,False,False
+2026-01-09,A,Friday,breakfast,"Puri Bhaji, Chai",244,259,1.4,8.6,False,False,False
+2026-01-09,A,Friday,lunch,"Rice, Masoor Dal, Palak Paneer, Roti, Salad",264,278,1.9,8.7,False,False,False
+2026-01-09,A,Friday,snacks,"Dhokla, Green Chutney, Chai",186,194,0.8,8.2,False,False,False
+2026-01-09,A,Friday,dinner,"Veg Biryani, Mirchi Ka Salan, Raita, Papad",292,314,0.6,9.3,False,False,False
+2026-01-10,A,Saturday,breakfast,"Chole Bhature, Chai",260,284,0.9,9.2,True,False,False
+2026-01-10,A,Saturday,lunch,"Rice, Dal Fry, Aloo Matar, Roti, Salad, Pickle",244,236,5.2,7.8,True,False,False
+2026-01-10,A,Saturday,snacks,"Maggi Noodles, Chai",206,223,0.7,9.1,True,False,False
+2026-01-10,A,Saturday,dinner,"Rice, Shahi Paneer, Roti, Salad, Gulab Jamun",304,327,0.5,9.4,True,False,False
+2026-01-11,A,Sunday,breakfast,"Dosa, Sambhar, Coconut Chutney, Chai",252,270,1.1,8.9,True,False,False
+2026-01-11,A,Sunday,lunch,"Rice, Dal, Chicken Curry / Paneer Masala, Roti, Salad, Kheer",310,342,0.4,9.6,True,False,False
+2026-01-11,A,Sunday,snacks,"Fruit Custard / Seasonal Fruit",178,183,1.5,7.7,True,False,False
+2026-01-11,A,Sunday,dinner,"Rice, Dal Makhani, Mix Veg, Roti, Raita, Papad",286,301,1.2,8.8,True,False,False
+2026-01-12,B,Monday,breakfast,"Vermicelli Upma, Boiled Eggs, Bread Butter, Chai",210,205,3.8,7.4,False,False,False
+2026-01-12,B,Monday,lunch,"Rice, Toor Dal, Aloo Palak, Roti, Salad",234,226,5.9,7.3,False,False,False
+2026-01-12,B,Monday,snacks,"Kachori, Tamarind Chutney, Chai",174,181,1.0,8.1,False,False,False
+2026-01-12,B,Monday,dinner,"Rice, Kidney Bean Curry, Roti, Raita",246,252,2.0,8.0,False,False,False
+2026-01-13,B,Tuesday,breakfast,"Medu Vada, Sambhar, Chutney, Chai",226,236,1.6,8.4,False,False,False
+2026-01-13,B,Tuesday,lunch,"Rice, Moong Dal Tadka, Tinda Masala, Roti, Salad",232,221,6.3,6.8,False,False,False
+2026-01-13,B,Tuesday,snacks,"Onion Pakora, Green Chutney, Chai",176,187,0.8,8.3,False,False,False
+2026-01-13,B,Tuesday,dinner,"Rice, Pav Bhaji, Salad, Butter",258,274,1.1,8.8,False,False,False
+2026-01-14,B,Wednesday,breakfast,"Gobi Paratha, Dahi, Pickle, Chai",232,244,1.5,8.5,False,False,True
+2026-01-14,B,Wednesday,lunch,"Rice, Chana Dal, Baingan Bharta, Roti, Salad, Papad",248,242,4.8,7.7,False,False,True
+2026-01-14,B,Wednesday,snacks,"Veg Puff, Ketchup, Chai",184,198,0.6,8.5,False,False,True
+2026-01-14,B,Wednesday,dinner,"Rice, Matar Paneer, Roti, Raita, Papad",276,295,0.8,9.0,False,False,True
+2026-01-15,B,Thursday,breakfast,"Rava Idli, Sambhar, Chutney, Chai",204,193,5.1,7.0,False,False,False
+2026-01-15,B,Thursday,lunch,"Rice, Masoor Dal, Aloo Beans, Roti, Salad",224,211,7.2,6.9,False,False,False
+2026-01-15,B,Thursday,snacks,"Corn Chaat, Lemon, Chai",152,148,2.3,6.7,False,False,False
+2026-01-15,B,Thursday,dinner,"Rice, Dal Tadka, Jeera Aloo, Roti, Papad",232,225,4.2,7.4,False,False,False
+2026-01-16,B,Friday,breakfast,"Bread Omelette / Bread Butter, Chai",218,229,1.9,8.0,False,False,False
+2026-01-16,B,Friday,lunch,"Rice, Arhar Dal, Methi Aloo, Roti, Salad",238,229,5.7,7.2,False,False,False
+2026-01-16,B,Friday,snacks,"Popcorn, Chai",148,139,3.0,6.4,False,False,False
+2026-01-16,B,Friday,dinner,"Veg Pulao, Dal, Raita, Papad",262,271,2.0,8.2,False,False,False
+2026-01-17,B,Saturday,breakfast,"Aloo Puri, Chai",252,269,1.2,8.8,True,False,False
+2026-01-17,B,Saturday,lunch,"Rice, Dal, Mix Veg, Roti, Salad, Pickle",238,230,5.1,7.5,True,False,False
+2026-01-17,B,Saturday,snacks,"Bread Pakora, Chai",196,213,0.6,8.8,True,False,False
+2026-01-17,B,Saturday,dinner,"Rice, Paneer Butter Masala, Roti, Salad, Halwa",296,321,0.4,9.5,True,False,False
+2026-01-18,B,Sunday,breakfast,"Uttapam, Sambhar, Chutney, Chai",246,261,1.4,8.7,True,False,False
+2026-01-18,B,Sunday,lunch,"Rice, Dal, Egg Curry / Paneer Kadai, Roti, Salad, Ice Cream",304,334,0.5,9.5,True,False,False
+2026-01-18,B,Sunday,snacks,"Seasonal Fruit / Banana",166,159,3.2,6.8,True,False,False
+2026-01-18,B,Sunday,dinner,"Rice, Dal Fry, Aloo Gobhi, Roti, Raita, Papad",278,289,1.7,8.4,True,False,False
+2026-02-23,A,Monday,breakfast,"Poha, Boiled Eggs, Bread Butter, Chai",196,171,8.9,7.7,False,True,False
+2026-02-23,A,Monday,lunch,"Rice, Dal Tadka, Aloo Gobhi, Roti, Salad, Pickle",218,188,10.6,7.4,False,True,False
+2026-02-23,A,Monday,snacks,"Samosa, Tomato Ketchup, Chai",148,132,5.2,7.8,False,True,False
+2026-02-23,A,Monday,dinner,"Rice, Rajma, Jeera Aloo, Roti, Raita",226,201,8.4,8.0,False,True,False
+2026-03-25,A,Wednesday,breakfast,"Aloo Paratha, Dahi, Pickle, Chai",238,258,1.0,9.0,False,False,True
+2026-03-25,A,Wednesday,lunch,"Rice, Arhar Dal, Mix Veg, Roti, Salad, Papad",262,286,0.7,8.7,False,False,True
+2026-03-25,A,Wednesday,snacks,"Veg Cutlet, Tamarind Chutney, Chai",190,208,0.4,8.8,False,False,True
+2026-03-25,A,Wednesday,dinner,"Rice, Dal Makhani, Paneer Bhurji, Roti, Raita",288,316,0.3,9.4,False,False,True

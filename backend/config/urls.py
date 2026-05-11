@@ -16,10 +16,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.http import JsonResponse
+
+
+def health_check(request):
+    return JsonResponse({"status": "ok"})
+
 
 urlpatterns = [
+    # Admin
     path('admin/', admin.site.urls),
-    path('api/auth/', include('users.urls')),
-    path('api/meals/', include('meals.urls')),
-    path('api/predictions/', include('predictions.urls')),
+
+    # Health check (useful for deployment / monitoring)
+    path('health/', health_check),
+
+    # API routes
+    path('api/auth/', include(('users.urls', 'users'), namespace='users')),
+    path('api/meals/', include(('meals.urls', 'meals'), namespace='meals')),
+    path('api/predictions/', include(('predictions.urls', 'predictions'), namespace='predictions')),
 ]

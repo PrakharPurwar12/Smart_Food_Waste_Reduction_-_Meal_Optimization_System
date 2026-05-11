@@ -5,7 +5,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from .models import User
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
-from .permissions import IsStudent, IsKitchen # Importing new permissions
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()

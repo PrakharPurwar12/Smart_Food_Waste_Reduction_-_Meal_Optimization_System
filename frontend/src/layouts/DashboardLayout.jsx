@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   Utensils, 
-  Calendar, 
-  Settings, 
+  ChartNoAxesCombined,
   LogOut, 
   Menu, 
   X, 
@@ -29,6 +28,7 @@ const DashboardLayout = ({ role }) => {
     { title: 'Book Meals', path: '/student/booking', icon: <Utensils size={20} /> },
   ] : [
     { title: 'Dashboard', path: '/kitchen/dashboard', icon: <LayoutDashboard size={20} /> },
+    { title: 'Analytics', path: '/kitchen/analytics', icon: <ChartNoAxesCombined size={20} /> },
   ];
 
   const handleLogout = () => {

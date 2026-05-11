@@ -1,7 +1,6 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Utensils, TrendingUp, Users, ShieldCheck, ChevronRight } from 'lucide-react';
+import { Utensils, TrendingUp, ShieldCheck, ChevronRight } from 'lucide-react';
 import Button from '../components/Button';
 
 const LandingPage = () => {
