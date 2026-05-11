@@ -261,9 +261,9 @@ const LandingPage = () => {
       <section className="py-20 border-y border-slate-100 dark:border-white/5 bg-white dark:bg-[#060b14]">
         <FadeUp className="max-w-7xl mx-auto px-6">
           <p className="text-center text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.4em] mb-12">Institutional partners optimizing at scale</p>
-          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-700">
-            {['OXFORD TECH', 'STANFORD CAMPUS', 'METRO UNIVERSITY', 'GLOBAL INSTITUTE'].map((n, i) => (
-              <span key={i} className="text-lg font-black tracking-tighter text-slate-400 dark:text-slate-600 cursor-default select-none">
+          <div className="flex flex-wrap justify-center items-center gap-10 md:gap-20 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-700">
+            {['LOVELY PROFESSIONAL UNIVERSITY', 'OXFORD TECH', 'STANFORD CAMPUS', 'METRO UNIVERSITY'].map((n, i) => (
+              <span key={i} className="text-sm md:text-base font-black tracking-[0.2em] text-slate-400 dark:text-slate-600 cursor-default select-none text-center">
                 {n}
               </span>
             ))}
