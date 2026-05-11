@@ -1,5 +1,5 @@
-import { Outlet, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { Outlet, Link, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { TrendingUp, ShieldCheck, Utensils, Leaf, ArrowRight } from 'lucide-react';
 
 const features = [
@@ -15,6 +15,7 @@ const stats = [
 ];
 
 const AuthLayout = () => {
+  const location = useLocation();
   return (
     <div className="h-screen flex overflow-hidden bg-slate-950 transition-colors duration-300">
 
@@ -147,14 +148,27 @@ const AuthLayout = () => {
           <Link to="/" className="text-xl font-extrabold text-slate-900 dark:text-white tracking-tight">SmartMess</Link>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.1 }}
-          className="w-full max-w-[400px] my-auto"
-        >
-          <Outlet />
-        </motion.div>
+        <div className="w-full max-w-[400px] my-auto">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={location.pathname}
+              initial={{ 
+                opacity: 0, 
+                x: location.pathname === '/login' ? 30 : -30,
+                filter: 'blur(10px)' 
+              }}
+              animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+              exit={{ 
+                opacity: 0, 
+                x: location.pathname === '/login' ? -30 : 30,
+                filter: 'blur(10px)' 
+              }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <Outlet />
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
         <p className="mt-10 text-center text-xs text-slate-400 dark:text-slate-600">
           &copy; 2026 SmartMess Technologies. All rights reserved.
