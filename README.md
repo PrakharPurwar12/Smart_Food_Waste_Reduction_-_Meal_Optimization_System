@@ -1,918 +1,180 @@
-# Smart Food Waste Reduction & Meal Optimization System
+# 🥗 Smart Food Waste Reduction & Meal Optimization System
 
-An AI-powered Smart Mess Management and Food Waste Reduction platform designed for colleges and universities.
+[![React](https://img.shields.io/badge/Frontend-React%2019-61DAFB?logo=react&logoColor=white)](https://react.dev/)
+[![Django](https://img.shields.io/badge/Backend-Django%206-092E20?logo=django&logoColor=white)](https://www.djangoproject.com/)
+[![Machine Learning](https://img.shields.io/badge/AI/ML-Scikit--Learn-F7931E?logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
+[![Vite](https://img.shields.io/badge/Build-Vite-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Styling-Tailwind%20CSS-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 
-The system combines:
-- meal booking management
-- AI-based attendance prediction
-- intelligent food quantity optimization
-- operational kitchen dashboards
-- analytics and monitoring
-- automated ML retraining
-
-to reduce food wastage, improve kitchen operations, and optimize institutional meal management.
+An **AI-Powered SaaS Platform** designed to revolutionize institutional mess management. By combining **Full-Stack Development** with **Predictive Analytics**, this system optimizes food preparation, minimizes wastage, and streamlines kitchen operations for colleges and universities.
 
 ---
 
-# Table of Contents
+## 🚀 Key Highlights
 
-- Introduction
-- Problem Statement
-- Project Objectives
-- Real-World Motivation
-- System Overview
-- Core Features
-- Workflow of the System
-- System Architecture
-- Frontend Architecture
-- Backend Architecture
-- Machine Learning Architecture
-- Dataset Architecture
-- Database Design
-- API Architecture
-- Authentication & Security
-- Multi-Tenant College Architecture
-- Prediction & Optimization Workflow
-- Operational Workflow
-- Technology Stack
-- Project Structure
-- Installation Guide
-- Environment Variables
-- Machine Learning Training
-- Available Dashboards
-- Future Improvements
-- Challenges Faced
-- Research & Academic Value
-- Conclusion
-- License
+- 🤖 **AI Attendance Prediction**: RandomForest-based forecasting of student attendance.
+- 📉 **Waste Optimization**: Intelligent food quantity recommendations based on predictions.
+- 🏢 **Multi-Tenant Architecture**: Complete data isolation and per-college ML models.
+- 📅 **Smart Rotating Menu**: Automated menu management with popularity tracking.
+- 📊 **Kitchen Analytics**: Real-time operational visibility and prediction monitoring.
+- 🔄 **Automated Retraining**: Continuous ML model improvement via scheduled tasks.
 
 ---
 
-# Introduction
+## 📖 Table of Contents
 
-Food wastage is a major operational and economic problem in institutional mess systems such as:
-- colleges
-- universities
-- hostels
-- training institutes
-
-Traditional mess systems generally estimate food preparation manually based on assumptions rather than actual attendance data. This often results in:
-- excessive food wastage
-- unnecessary operational costs
-- inaccurate food preparation
-- poor resource utilization
-- inefficient kitchen planning
-
-The Smart Food Waste Reduction & Meal Optimization System was developed to solve this problem using:
-- student meal booking
-- machine learning-based attendance prediction
-- food quantity optimization
-- operational analytics
-
-The platform acts as an intelligent operational assistant for kitchen staff and administrators.
+- [Core Features](#-core-features)
+- [System Architecture](#-system-architecture)
+- [Machine Learning Engine](#-machine-learning-engine)
+- [Technology Stack](#-technology-stack)
+- [Project Structure](#-project-structure)
+- [Installation Guide](#-installation-guide)
+- [Operational Dashboards](#-operational-dashboards)
+- [Future Roadmap](#-future-roadmap)
 
 ---
 
-# Problem Statement
+## ✨ Core Features
 
-Most institutional mess systems face the following problems:
+### 🎓 For Students
+- **Secure Booking**: Effortless meal booking and cancellation.
+- **Menu Visibility**: Real-time access to the rotating mess menu.
+- **History Tracking**: Comprehensive booking and attendance history.
+- **Profile Management**: College-specific account settings.
 
-## 1. Food Wastage
+### 👨‍🍳 For Kitchen Staff
+- **Operational Command Center**: Real-time stats on bookings and predictions.
+- **Smart Recommendations**: Automated rice/dal/vegetable quantity calculations.
+- **Menu Management**: Quick updates and auto-fill from rotating menu datasets.
+- **Prediction Insights**: Confidence levels for every AI forecast.
 
-Food is often prepared in excess because kitchens do not know the exact number of students who will attend meals.
-
-This leads to:
-- wastage of rice, vegetables, dal, oil, and dairy products
-- increased operational cost
-- sustainability concerns
-
----
-
-## 2. Manual Estimation
-
-Mess staff generally estimate attendance using:
-- assumptions
-- experience
-- previous trends
-
-These estimations become inaccurate during:
-- weekends
-- exams
-- festivals
-- holidays
-- special events
+### 📈 AI & Analytics
+- **Dynamic Forecasting**: Accounts for weekends, exams, and festivals.
+- **Trend Analysis**: Visualizes attendance patterns and waste metrics.
+- **Auto-Retraining**: System learns from new data every week automatically.
 
 ---
 
-## 3. Lack of Data-Driven Operations
+## 🏗 System Architecture
 
-Traditional mess systems usually lack:
-- analytics
-- prediction systems
-- attendance forecasting
-- operational intelligence
-
----
-
-## 4. Inefficient Meal Planning
-
-Without prediction systems:
-- ingredient purchasing becomes difficult
-- kitchen preparation becomes inefficient
-- food inventory management suffers
-
----
-
-# Project Objectives
-
-The primary objectives of this project are:
-
-- Reduce food wastage in institutional mess systems
-- Predict expected student attendance using AI/ML
-- Optimize food preparation quantities
-- Improve operational efficiency of kitchen staff
-- Provide real-time analytics and operational visibility
-- Build a scalable multi-tenant smart mess platform
-- Demonstrate integration of Full Stack Development with Machine Learning
-
----
-
-# Real-World Motivation
-
-Large institutional mess systems serve hundreds or thousands of students daily.
-
-Even a small prediction error can result in:
-- large-scale food wastage
-- financial losses
-- operational inefficiency
-
-This project attempts to bridge the gap between:
-- operational workflows
-and
-- intelligent prediction systems
-
-using modern full-stack technologies and machine learning.
-
----
-
-# System Overview
-
-The platform provides separate operational workflows for:
-
-| User Type | Purpose |
-|---|---|
-| Students | Meal booking & menu visibility |
-| Kitchen Staff | Operational dashboard & food planning |
-| Administrators | Analytics & monitoring |
-
-The system uses:
-- historical attendance data
-- meal popularity
-- festival patterns
-- weekend behavior
-- exam schedules
-
-to generate intelligent attendance predictions.
-
----
-
-# Core Features
-
-# Student Features
-
-- Secure Authentication
-- College-Specific Access
-- Meal Booking System
-- Meal Cancellation
-- Rotating Menu Visibility
-- Meal Schedule
-- Booking History
-- Daily Meal Tracking
-
----
-
-# Kitchen Staff Features
-
-- Operational Dashboard
-- Meal Booking Statistics
-- Daily Menu Management
-- AI-Based Attendance Prediction
-- Food Quantity Recommendations
-- Prediction Confidence System
-- Auto-Fill Rotating Menu
-- Waste Reduction Insights
-
----
-
-# AI & Machine Learning Features
-
-- Attendance Forecasting
-- RandomForestRegressor Prediction Engine
-- Historical Data Analysis
-- Prediction Confidence Classification
-- Automated Model Retraining
-- Per-College ML Models
-- Per-Meal Prediction Models
-- Persistent Model Storage
-- Prediction Fallback System
-
----
-
-# Analytics Features
-
-- Attendance Trend Analysis
-- Waste Monitoring
-- Prediction vs Actual Analysis
-- Operational Insights
-- Confidence Distribution
-- Prediction Monitoring Dashboard
-
----
-
-# Workflow of the System
-
-## Overall Workflow
+The platform follows a modular, scalable architecture designed for institutional deployment.
 
 ```text
-Student Books Meal
-        ↓
-Booking Stored in Database
-        ↓
-Historical Attendance Updated
-        ↓
-Machine Learning Model Predicts Attendance
-        ↓
-Kitchen Dashboard Receives Prediction
-        ↓
-Food Quantity Optimization Calculated
-        ↓
-Kitchen Prepares Optimized Quantity
-        ↓
-Food Wastage Reduced
+[ Frontend: React + Vite ] <───HTTPS/JSON───> [ Backend: Django REST Framework ]
+                                                        │
+                                                        ├── [ AI Prediction Engine ]
+                                                        ├── [ Scheduled Tasks (APScheduler) ]
+                                                        └── [ Database: SQLite / Multi-Tenant ]
 ```
+
+### 🔐 Security & Multi-Tenancy
+- **JWT Authentication**: Secure, stateless session management.
+- **College Scoping**: Every query is filtered by college ID for strict data privacy.
+- **Role-Based Access**: Granular control for Students, Staff, and Admins.
 
 ---
 
-# System Architecture
+## 🧠 Machine Learning Engine
 
-The project follows a modular full-stack architecture.
+The "Brain" of the system uses advanced regression to solve the problem of manual estimation.
 
-## High-Level Architecture
+<details>
+<summary><b>Click to expand ML Technical Details</b></summary>
+
+- **Model**: `RandomForestRegressor`
+- **Features**: Day of week, Meal Type, Popularity Score, Weekend/Exam/Festival indicators.
+- **Target**: Actual student attendance.
+- **Confidence System**: Classified as High/Medium/Low based on training variance and external factors.
+- **Persistence**: Models are serialized using `Joblib` and stored per college.
+- **Retraining**: Automated logic handles incremental data updates to maintain accuracy.
+
+</details>
+
+---
+
+## 🛠 Technology Stack
+
+| Layer | Technologies |
+| :--- | :--- |
+| **Frontend** | React 19, Tailwind CSS, Recharts, Axios |
+| **Backend** | Django 6, Django REST Framework, JWT |
+| **AI/ML** | Scikit-learn, Pandas, Joblib |
+| **DevOps** | Vite, Dotenv, WhiteNoise, APScheduler |
+| **Database** | SQLite (Scalable to PostgreSQL) |
+
+---
+
+## 📂 Project Structure
 
 ```text
-Frontend (React + Vite)
-        ↓
-REST APIs (Django REST Framework)
-        ↓
-Business Logic Layer
-        ↓
-Machine Learning Prediction Engine
-        ↓
-SQLite Database + Dataset Layer
-```
-
----
-
-# Frontend Architecture
-
-The frontend is built using:
-- React 19
-- Vite
-- Tailwind CSS
-- Axios
-- Recharts
-
----
-
-## Frontend Responsibilities
-
-- UI rendering
-- role-based dashboards
-- operational workflows
-- prediction display
-- analytics visualization
-- API communication
-- authentication handling
-
----
-
-## Frontend Design Philosophy
-
-The frontend was intentionally designed to be:
-- operationally simple
-- minimal
-- fast
-- readable
-- non-technical for mess staff
-
-The kitchen dashboard focuses on:
-- meal counts
-- prediction summaries
-- food quantity recommendations
-- quick menu actions
-
-instead of complex technical analytics.
-
----
-
-# Backend Architecture
-
-The backend is built using:
-- Django 6
-- Django REST Framework
-- JWT Authentication
-- APScheduler
-- Scikit-learn
-
----
-
-## Backend Responsibilities
-
-- API handling
-- authentication
-- meal booking logic
-- role-based authorization
-- prediction generation
-- food optimization
-- analytics generation
-- automated retraining
-- dataset management
-
----
-
-# Django Apps Structure
-
-| App | Purpose |
-|---|---|
-| users | Authentication & user management |
-| meals | Meal booking & menu management |
-| predictions | ML prediction & analytics |
-
----
-
-# Machine Learning Architecture
-
-The project integrates Machine Learning to forecast expected student attendance.
-
----
-
-# Why Machine Learning Was Used
-
-Attendance patterns vary due to:
-- weekdays/weekends
-- meal popularity
-- festivals
-- examinations
-- seasonal behavior
-
-Manual prediction becomes unreliable at scale.
-
-Machine Learning helps:
-- identify attendance patterns
-- improve operational planning
-- reduce food wastage
-- adapt to changing trends
-
----
-
-# Machine Learning Workflow
-
-## Step 1 — Dataset Collection
-
-Dataset includes:
-- historical attendance
-- meal type
-- weekend patterns
-- exam impact
-- festival impact
-- popularity scores
-- waste records
-
-Dataset file:
-
-```text
-backend/predictions/data/mess_attendance_dataset.csv
-```
-
----
-
-## Step 2 — Feature Engineering
-
-Features used:
-- day
-- meal_type
-- popularity_score
-- is_weekend
-- is_exam
-- is_festival
-- waste_kg
-
-Target variable:
-- actual_students
-
----
-
-## Step 3 — Data Preprocessing
-
-The system performs:
-- label encoding
-- dataset cleaning
-- feature transformation
-- train-test split
-
----
-
-## Step 4 — Model Training
-
-The project uses:
-
-```text
-RandomForestRegressor
-```
-
-because it:
-- handles nonlinear patterns
-- performs well on operational datasets
-- handles fluctuating attendance behavior
-- improves forecasting quality
-
----
-
-## Step 5 — Model Evaluation
-
-The model is evaluated using:
-- MAE (Mean Absolute Error)
-- R² Score
-
----
-
-## Step 6 — Model Persistence
-
-Trained models are saved using:
-- Joblib
-
-Stored inside:
-
-```text
-backend/predictions/trained_models/
-```
-
-This prevents retraining on every request.
-
----
-
-## Step 7 — Prediction API
-
-The backend loads trained models and generates:
-- attendance prediction
-- confidence level
-- food optimization recommendation
-
----
-
-# Prediction Confidence System
-
-Predictions are classified as:
-- High Confidence
-- Medium Confidence
-- Low Confidence
-
-Confidence is based on:
-- historical variance
-- weekend behavior
-- festival impact
-- exam schedules
-- training distribution
-
----
-
-# Automated Retraining System
-
-The system includes:
-- APScheduler-based retraining
-- scheduled model updates
-- training logs
-- automatic model replacement
-
-This allows the ML system to improve continuously over time.
-
----
-
-# Dataset Architecture
-
-## Rotating Menu Dataset
-
-The project uses:
-
-```text
-backend/meals/data/rotating_menu.json
-```
-
-Benefits:
-- reusable menu architecture
-- scalable operational data
-- future admin customization
-- analytics compatibility
-
----
-
-## Attendance Dataset
-
-The project includes:
-
-```text
-backend/predictions/data/mess_attendance_dataset.csv
-```
-
-containing:
-- attendance patterns
-- waste records
-- popularity signals
-- exam/festival indicators
-
----
-
-# Database Design
-
-## Main Models
-
-| Model | Purpose |
-|---|---|
-| User | Authentication & roles |
-| College | Multi-tenant separation |
-| MealBooking | Student bookings |
-| MessMenu | Daily menus |
-| Prediction | Attendance predictions |
-| ModelTrainingLog | ML training history |
-
----
-
-# Multi-Tenant College Architecture
-
-The system is college-aware.
-
-Each college has:
-- isolated bookings
-- isolated menus
-- isolated predictions
-- isolated analytics
-- isolated ML models
-
-This architecture enables:
-- scalability
-- SaaS expansion
-- operational separation
-
----
-
-# API Architecture
-
-The backend exposes REST APIs for:
-- authentication
-- booking management
-- menu management
-- predictions
-- analytics
-
----
-
-# Important API Endpoints
-
-## Authentication
-
-```text
-/api/auth/
-```
-
----
-
-## Meals
-
-```text
-/api/meals/
-```
-
----
-
-## Predictions
-
-```text
-/api/predictions/
-```
-
----
-
-# Sample Prediction API
-
-## Request
-
-```json
-{
-  "meal_type": "Lunch",
-  "date": "2026-05-10"
-}
-```
-
----
-
-## Response
-
-```json
-{
-  "predicted_students": 186,
-  "confidence": "High",
-  "food_plan": {
-    "rice": "24 kg",
-    "dal": "12 kg"
-  }
-}
-```
-
----
-
-# Authentication & Security
-
-Implemented using:
-- JWT Authentication
-- Protected Routes
-- Role-Based Permissions
-- College Isolation
-- Secure API Access
-
-Roles:
-- Student
-- Kitchen Staff
-
----
-
-# Technology Stack
-
-| Layer | Technology |
-|---|---|
-| Frontend | React 19 |
-| Styling | Tailwind CSS |
-| Charts | Recharts |
-| Backend | Django 6 |
-| API | Django REST Framework |
-| Authentication | JWT |
-| ML Framework | Scikit-learn |
-| ML Model | RandomForestRegressor |
-| Dataset Processing | Pandas |
-| Scheduler | APScheduler |
-| Database | SQLite |
-| Build Tool | Vite |
-
----
-
-# Project Structure
-
-```text
-Smart_Food_Waste_Reduction_-_Meal_Optimization_System/
-│
-├── frontend/
-│
-├── backend/
-│   ├── config/
-│   ├── users/
-│   ├── meals/
-│   ├── predictions/
-│   │
-│   ├── predictions/data/
-│   │   └── mess_attendance_dataset.csv
-│   │
-│   ├── predictions/trained_models/
-│   │
-│   ├── meals/data/
-│   │   └── rotating_menu.json
-│
+Smart_Food_Waste_Reduction/
+├── frontend/                 # React Source Code
+│   ├── src/pages/            # Role-specific dashboards
+│   └── src/services/         # API integration layer
+├── backend/                  # Django Project
+│   ├── users/                # Auth & User Management
+│   ├── meals/                # Booking & Menu Logic
+│   │   └── data/             # Rotating Menu JSON
+│   ├── predictions/          # ML Engine & Analytics
+│   │   ├── data/             # Attendance Datasets (CSV)
+│   │   ├── trained_models/   # Persistent ML Artifacts
+│   │   └── ml_model.py       # Core Prediction Logic
+│   └── config/               # Project Settings
 └── README.md
 ```
 
 ---
 
-# Installation Guide
+## 🔧 Installation Guide
 
-# 1. Clone Repository
-
+### 1. Clone & Environment
 ```bash
 git clone <repository-url>
-cd Smart_Food_Waste_Reduction_-_Meal_Optimization_System
+cd Smart_Food_Waste_Reduction
 ```
 
----
-
-# Backend Setup
-
-## 2. Create Virtual Environment
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
-
----
-
-## 3. Install Backend Dependencies
-
-```bash
-pip install -r backend/requirements.txt
-```
-
----
-
-## 4. Configure Environment Variables
-
-Create:
-
-```text
-backend/.env
-```
-
-Example:
-
-```env
-SECRET_KEY=your_secret_key
-DEBUG=True
-```
-
----
-
-## 5. Apply Migrations
-
+### 2. Backend Setup
 ```bash
 cd backend
+python -m venv .venv
+# Activate: .venv\Scripts\activate (Windows) or source .venv/bin/activate (Linux/Mac)
+pip install -r requirements.txt
 python manage.py migrate
-```
-
----
-
-## 6. Train ML Models
-
-```bash
-python predictions/train_model.py
-```
-
----
-
-## 7. Start Backend Server
-
-```bash
+python predictions/train_model.py  # Initialize ML models
 python manage.py runserver
 ```
 
-Backend URL:
-
-```text
-http://127.0.0.1:8000
-```
-
----
-
-# Frontend Setup
-
-## 8. Install Frontend Dependencies
-
+### 3. Frontend Setup
 ```bash
 cd frontend
 npm install
-```
-
----
-
-## 9. Configure Frontend Environment
-
-Create:
-
-```text
-frontend/.env
-```
-
-Example:
-
-```env
-VITE_API_BASE_URL=http://127.0.0.1:8000/api/
-```
-
----
-
-## 10. Start Frontend
-
-```bash
 npm run dev
 ```
 
-Frontend URL:
+---
 
-```text
-http://localhost:5173
-```
+## 🖼 Operational Dashboards
+
+| Dashboard | Target User | Primary Goal |
+| :--- | :--- | :--- |
+| **Student Portal** | Students | Fast meal booking & menu checking |
+| **Kitchen Hub** | Mess Staff | Real-time prep counts & AI recommendations |
+| **Analytics Pro** | Admins | Long-term trend analysis & waste reduction monitoring |
 
 ---
 
-# Available Dashboards
+## 🛣 Future Roadmap
 
-# Student Dashboard
-
-Features:
-- meal booking
-- menu visibility
-- booking history
-- meal cancellation
+- [ ] **Mobile App**: Cross-platform Flutter/React Native application.
+- [ ] **QR Attendance**: Scan-based entry tracking for 100% data accuracy.
+- [ ] **Inventory Sync**: Automated ingredient ordering based on ML predictions.
+- [ ] **Cloud Migration**: Deployment to AWS/GCP with PostgreSQL.
 
 ---
 
-# Kitchen Dashboard
+## ⚖ License & Academic Value
 
-Features:
-- operational overview
-- attendance prediction
-- food recommendation
-- menu management
-- analytics access
+This project is designed as a **Production-Grade Prototype** for academic research and institutional waste reduction initiatives. It demonstrates the seamless integration of **Modern Web Architecture** with **Predictive Artificial Intelligence**.
 
 ---
-
-# Analytics Dashboard
-
-Features:
-- attendance trends
-- waste analysis
-- prediction monitoring
-- operational insights
-
----
-
-# Challenges Faced
-
-During development, several technical challenges were addressed:
-
-- frontend/backend route synchronization
-- multi-tenant prediction isolation
-- ML model persistence
-- dataset engineering
-- operational dashboard simplification
-- prediction fallback handling
-- automated retraining workflows
-- responsive operational UI design
-
----
-
-# Future Improvements
-
-Planned future enhancements include:
-
-- PostgreSQL migration
-- QR-based attendance system
-- Real-time attendance ingestion
-- Inventory management
-- Vendor management
-- Cost optimization
-- Deep learning models
-- Mobile application
-- Cloud deployment
-- Real-world production analytics
-
----
-
-# Research & Academic Value
-
-This project demonstrates:
-- full-stack development
-- machine learning integration
-- operational optimization
-- SaaS architecture concepts
-- workflow-oriented UX design
-- analytics engineering
-- AI-assisted forecasting
-
-Suitable for:
-- final year major projects
-- AI/ML demonstrations
-- portfolio projects
-- research prototypes
-- startup MVP concepts
-
----
-
-# Conclusion
-
-The Smart Food Waste Reduction & Meal Optimization System demonstrates how Artificial Intelligence and Full Stack Development can be combined to solve real-world operational problems.
-
-By integrating:
-- meal booking
-- machine learning prediction
-- food optimization
-- analytics
-- operational workflows
-
-the platform helps institutions:
-- reduce food wastage
-- improve kitchen efficiency
-- optimize operational planning
-- move toward data-driven mess management
-
----
-
-# License
-
-This project is intended for educational and research purposes.
+*Developed with ❤️ for a Greener & Smarter Institution.*
