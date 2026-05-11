@@ -84,7 +84,7 @@ const LandingPage = () => {
             <div className="absolute -inset-4 bg-gradient-to-tr from-emerald-500/20 to-blue-500/20 rounded-3xl blur-2xl opacity-50"></div>
             <div className="relative bg-slate-200 dark:bg-slate-800 p-2 rounded-[2rem] shadow-2xl border border-white/20">
               <img 
-                src="/hero-pro.png" 
+                src="/hero.png" 
                 alt="Smart Mess Analytics Dashboard" 
                 className="rounded-[1.5rem] shadow-inner"
               />
