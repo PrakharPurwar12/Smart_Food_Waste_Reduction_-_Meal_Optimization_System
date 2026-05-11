@@ -1,18 +1,60 @@
 import { Link } from 'react-router-dom';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { motion, useInView, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
-import { Utensils, TrendingUp, ShieldCheck, ArrowRight, Zap, BarChart3, Lock, ChevronRight, Leaf } from 'lucide-react';
+import { Utensils, TrendingUp, ShieldCheck, ArrowRight, Zap, BarChart3, Lock, ChevronRight, BookOpen, Activity, CheckCircle2 } from 'lucide-react';
 
+/* ── Animated counter hook ── */
+const useCounter = (target, inView, duration = 2000) => {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!inView) return;
+    const numeric = parseFloat(target.replace(/[^0-9.]/g, ''));
+    const prefix = target.startsWith('$') ? '$' : '';
+    const suffix = target.replace(/[$0-9.]/g, '');
+    let start = null;
+    const step = (ts) => {
+      if (!start) start = ts;
+      const progress = Math.min((ts - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount({ value: Math.floor(eased * numeric), prefix, suffix });
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [inView]);
+  return count;
+};
+
+/* ── Fade-up component ── */
 const FadeUp = ({ children, delay = 0, className = '' }) => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-60px' });
   return (
-    <motion.div ref={ref} initial={{ opacity: 0, y: 30 }}
+    <motion.div ref={ref}
+      initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
       className={className}>
       {children}
     </motion.div>
+  );
+};
+
+/* ── Animated Stat ── */
+const AnimatedStat = ({ value, label }) => {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true });
+  const counter = useCounter(value, inView);
+  const display = counter
+    ? `${counter.prefix}${counter.value.toLocaleString()}${counter.suffix}`
+    : '0';
+  return (
+    <div ref={ref} className="relative group w-full px-4 sm:px-0">
+      <p className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-white mb-2 tracking-tighter group-hover:text-emerald-400 transition-colors duration-500 truncate whitespace-nowrap overflow-visible">
+        {display}
+      </p>
+      <p className="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-[0.2em]">{label}</p>
+      <div className="absolute -left-6 top-0 bottom-0 w-px bg-white/5 hidden xl:block" />
+    </div>
   );
 };
 
@@ -26,20 +68,56 @@ const FEATURES = [
 ];
 
 const STATS = [
-  { value: '12,450+', label: 'Active Students', color: 'emerald' },
-  { value: '890k+', label: 'Meals Optimized', color: 'teal' },
-  { value: '42%', label: 'Waste Reduction', color: 'cyan' },
-  { value: '$1.2M', label: 'Cost Saved', color: 'emerald' },
+  { value: '12450+', label: 'Active Students' },
+  { value: '890000+', label: 'Meals Optimized' },
+  { value: '42%', label: 'Waste Reduction' },
+  { value: '$1200000', label: 'Cost Saved' },
+];
+
+const HOW_IT_WORKS = [
+  {
+    step: '01',
+    icon: <BookOpen size={20} />,
+    title: 'Students Book Ahead',
+    desc: 'Students reserve meals 24–72 hours in advance via the app. Simple, fast, and requires no extra effort.',
+  },
+  {
+    step: '02',
+    icon: <Activity size={20} />,
+    title: 'AI Predicts Demand',
+    desc: 'Our RandomForest model analyzes historical patterns, upcoming exams, and holidays to forecast precise headcount.',
+  },
+  {
+    step: '03',
+    icon: <CheckCircle2 size={20} />,
+    title: 'Kitchen Prepares Right',
+    desc: 'Kitchen staff see real-time dashboards with exact prep quantities — no guesswork, no waste.',
+  },
+];
+
+const TESTIMONIALS = [
+  {
+    quote: "SmartMess cut our weekly food waste by nearly half in the first month. The forecasting accuracy is genuinely impressive.",
+    name: "Dr. Anita Sharma",
+    role: "Director of Operations, Metro University",
+    initials: "AS",
+  },
+  {
+    quote: "Our kitchen staff finally has a system that tells them exactly what to prepare. The live dashboard is a game changer.",
+    name: "Rajiv Mehta",
+    role: "Head Chef, Global Institute",
+    initials: "RM",
+  },
 ];
 
 const SLIDES = [
-  '/slide_1.png', 
-  '/slide_2.png', 
-  '/slide_3.png', 
-  '/slide_4.png', 
-  '/slide_5.png', 
+  '/slide_1.png',
+  '/slide_2.png',
+  '/slide_3.png',
+  '/slide_4.png',
+  '/slide_5.png',
   '/slide_6.png',
-  '/hero.png'
+  '/hero.png',
 ];
 
 const LandingPage = () => {
@@ -71,6 +149,7 @@ const LandingPage = () => {
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-500 dark:text-slate-400">
             <a href="#features" onClick={e => handleNavClick(e, 'features')} className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Features</a>
+            <a href="#how-it-works" onClick={e => handleNavClick(e, 'how-it-works')} className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">How It Works</a>
             <a href="#metrics" onClick={e => handleNavClick(e, 'metrics')} className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Metrics</a>
             <a href="#cta" onClick={e => handleNavClick(e, 'cta')} className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Get Started</a>
           </div>
@@ -88,20 +167,18 @@ const LandingPage = () => {
 
       {/* ── HERO ── */}
       <section className="relative pt-0 pb-0 overflow-hidden">
-        {/* Full Width Hero Container */}
         <div className="w-full">
-          {/* Edge-to-Edge Visual Stage */}
-          <div className="relative w-full h-screen min-h-[600px] flex items-center justify-center overflow-hidden bg-black group">
-            
+          <div className="relative w-full h-screen min-h-[600px] flex items-center justify-center overflow-hidden bg-black">
+
             {/* Sliding Background Images */}
             <div className="absolute inset-0 z-0">
               <AnimatePresence mode="wait">
-                <motion.img 
+                <motion.img
                   key={currentSlide}
-                  src={SLIDES[currentSlide]} 
-                  initial={{ opacity: 0, scale: 1.1 }}
+                  src={SLIDES[currentSlide]}
+                  initial={{ opacity: 0, scale: 1.08 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
+                  exit={{ opacity: 0, scale: 0.96 }}
                   transition={{ duration: 1.5, ease: "easeInOut" }}
                   className="absolute inset-0 w-full h-full object-cover object-center"
                 />
@@ -111,72 +188,67 @@ const LandingPage = () => {
             {/* Slide Indicators */}
             <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-40 flex gap-3">
               {SLIDES.map((_, i) => (
-                <button 
-                  key={i} 
+                <button
+                  key={i}
                   onClick={() => setCurrentSlide(i)}
                   className={`h-1.5 rounded-full transition-all duration-500 ${i === currentSlide ? 'w-8 bg-emerald-400' : 'w-2 bg-white/30 hover:bg-white/50'}`}
                 />
               ))}
             </div>
 
-            {/* Floating Quote Inside Image */}
-            <div className="absolute top-20 sm:top-24 left-1/2 -translate-x-1/2 w-full z-20 text-center px-8">
-              <FadeUp delay={0.2} className="space-y-3">
-                <p className="text-[10px] md:text-sm font-bold tracking-[0.4em] uppercase text-white/60 drop-shadow-md">
-                  Future of Institutional Dining
-                </p>
-                <h2 className="text-lg md:text-3xl font-medium tracking-tight text-white italic drop-shadow-xl leading-relaxed max-w-2xl mx-auto px-4">
-                  "Smarter dining begins with smarter decisions."
-                </h2>
-              </FadeUp>
-            </div>
-            
-            {/* Professional Scrim - Edge-to-Edge */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(0,0,0,0.4)_0%,transparent_75%)] pointer-events-none z-10" />
+            {/* Dark scrim */}
+            <div className="absolute inset-0 bg-black/50 z-10 pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(0,0,0,0.2)_0%,transparent_75%)] pointer-events-none z-10" />
 
-            {/* Content Box (Centered) */}
-            <div className="absolute inset-0 flex items-center justify-center z-30 px-6">
-              <motion.div 
+            {/* Hero Content */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center z-30 px-6 gap-6">
+              {/* Floating Quote — above headline, clearly separate */}
+              <motion.p
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15, duration: 0.8 }}
+                className="text-[10px] md:text-xs font-bold tracking-[0.35em] uppercase text-white/50 text-center">
+                Future of Institutional Dining
+              </motion.p>
+
+              <motion.div
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.3, duration: 0.8 }}
-                className="w-full max-w-5xl text-center space-y-10 sm:space-y-12"
+                className="w-full max-w-5xl text-center space-y-8"
               >
-                <div className="space-y-6 sm:space-y-8 relative">
-                  {/* Localized dimming scrim */}
-                  <div className="absolute inset-0 -inset-x-20 bg-black/30 blur-[100px] sm:blur-[140px] -z-10 rounded-full" />
-                  
-                  <h1 className="text-4xl sm:text-7xl md:text-8xl lg:text-[100px] font-bold tracking-[-0.04em] leading-[1] text-white drop-shadow-[0_15px_50px_rgba(0,0,0,0.8)]">
+                <div className="space-y-6 relative">
+                  <div className="absolute inset-0 -inset-x-20 bg-black/25 blur-[100px] -z-10 rounded-full" />
+                  <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-[96px] font-bold tracking-[-0.04em] leading-[1] text-white drop-shadow-[0_10px_40px_rgba(0,0,0,0.8)]">
                     Optimize Meals. <br />
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300 font-black">Eliminate Waste.</span>
                   </h1>
-                  <p className="text-base sm:text-xl md:text-2xl text-white/90 max-w-2xl mx-auto font-bold leading-relaxed drop-shadow-[0_5px_15px_rgba(0,0,0,0.6)]">
+                  <p className="text-base sm:text-xl md:text-2xl text-white/85 max-w-2xl mx-auto font-semibold leading-relaxed drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
                     Helping institutional kitchens prepare the right amount of food — every single day.
                   </p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-8">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
                   <Link to="/register" className="w-full sm:w-auto">
                     <motion.button whileHover={{ y: -3 }} whileTap={{ scale: 0.98 }}
-                      className="w-full flex items-center justify-center gap-3 px-10 py-5 sm:px-14 sm:py-6 text-base sm:text-lg font-bold rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white shadow-[0_25px_50px_-12px_rgba(16,185,129,0.4)] transition-all">
-                      Get Started <ArrowRight size={22} />
+                      className="w-full flex items-center justify-center gap-3 px-10 py-5 sm:px-12 sm:py-5 text-base sm:text-lg font-bold rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white shadow-[0_20px_40px_-12px_rgba(16,185,129,0.4)] transition-all">
+                      Get Started <ArrowRight size={20} />
                     </motion.button>
                   </Link>
                   <Link to="/login" className="w-full sm:w-auto">
                     <motion.button whileHover={{ y: -3 }} whileTap={{ scale: 0.98 }}
-                      className="w-full flex items-center justify-center gap-3 px-10 py-5 sm:px-14 sm:py-6 text-base sm:text-lg font-extrabold rounded-2xl bg-transparent text-white border-2 border-white/50 hover:bg-white/10 shadow-2xl transition-all drop-shadow-xl">
+                      className="w-full flex items-center justify-center gap-3 px-10 py-5 sm:px-12 sm:py-5 text-base sm:text-lg font-bold rounded-2xl bg-transparent text-white border-2 border-white/40 hover:bg-white/10 transition-all">
                       Sign In
                     </motion.button>
                   </Link>
                 </div>
 
-                {/* Trust Indicator */}
-                <div className="flex items-center justify-center gap-10 opacity-30 pt-4">
-                  <div className="flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
-                    <TrendingUp size={12} /> High Accuracy
+                <div className="flex items-center justify-center gap-8 opacity-30 pt-2">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
+                    <TrendingUp size={11} /> High Accuracy
                   </div>
-                  <div className="flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
-                    <ShieldCheck size={12} /> Institutional Grade
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
+                    <ShieldCheck size={11} /> Institutional Grade
                   </div>
                 </div>
               </motion.div>
@@ -199,11 +271,47 @@ const LandingPage = () => {
         </FadeUp>
       </section>
 
+      {/* ── HOW IT WORKS ── */}
+      <section id="how-it-works" className="py-32 px-6 bg-white dark:bg-[#060b14]">
+        <div className="max-w-7xl mx-auto">
+          <FadeUp className="text-center max-w-2xl mx-auto mb-20 space-y-4">
+            <span className="inline-block text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+              The Process
+            </span>
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+              Simple steps. <br />
+              <span className="text-slate-400">Powerful results.</span>
+            </h2>
+          </FadeUp>
+
+          <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8">
+
+            {HOW_IT_WORKS.map((step, i) => (
+              <FadeUp key={i} delay={i * 0.15}>
+                <motion.div
+                  whileHover={{ y: -6 }}
+                  className="relative flex flex-col items-center text-center p-10 rounded-[2rem] bg-[#f8fafb] dark:bg-white/[0.02] border border-slate-200/60 dark:border-white/5 hover:border-emerald-500/30 transition-all duration-500 group"
+                >
+                  {/* Step number */}
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-white dark:bg-[#0d1421] border border-slate-200 dark:border-white/10 text-xs font-black text-emerald-600 dark:text-emerald-400 tracking-widest shadow-sm">
+                    {step.step}
+                  </div>
+                  <div className="w-16 h-16 rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-6 mt-2 group-hover:scale-110 transition-transform duration-500 shadow-sm">
+                    {step.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{step.title}</h3>
+                  <p className="text-slate-500 dark:text-slate-400 text-sm font-medium leading-relaxed">{step.desc}</p>
+                  <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                </motion.div>
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── FEATURES ── */}
       <section id="features" className="py-32 px-6 bg-[#f8fafb] dark:bg-[#060b14] relative overflow-hidden">
-        {/* Abstract background elements */}
         <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/5 blur-[120px] -z-10" />
-        
         <div className="max-w-7xl mx-auto">
           <FadeUp className="text-center max-w-2xl mx-auto mb-20 space-y-4">
             <span className="inline-block text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20">
@@ -221,7 +329,7 @@ const LandingPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {FEATURES.map((f, i) => (
               <FadeUp key={i} delay={i * 0.1}>
-                <motion.div 
+                <motion.div
                   whileHover={{ y: -8 }}
                   className="group relative p-10 rounded-[2.5rem] bg-white dark:bg-white/[0.02] border border-slate-200/60 dark:border-white/5 hover:border-emerald-500/30 transition-all duration-500"
                 >
@@ -233,7 +341,6 @@ const LandingPage = () => {
                     <h3 className="text-xl font-bold text-slate-900 dark:text-white">{f.title}</h3>
                     <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-sm font-medium">{f.desc}</p>
                   </div>
-                  {/* Subtle hover glow */}
                   <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                 </motion.div>
               </FadeUp>
@@ -244,7 +351,6 @@ const LandingPage = () => {
 
       {/* ── METRICS ── */}
       <section id="metrics" className="py-32 relative overflow-hidden bg-slate-950">
-        {/* Cinematic dark background */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.1),transparent_70%)]" />
         <div className="absolute inset-0 opacity-[0.03]"
           style={{ backgroundImage: 'linear-gradient(white 1px,transparent 1px),linear-gradient(90deg,white 1px,transparent 1px)', backgroundSize: '64px 64px' }} />
@@ -265,19 +371,50 @@ const LandingPage = () => {
             </FadeUp>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 lg:gap-16">
             {STATS.map((s, i) => (
               <FadeUp key={i} delay={i * 0.1}>
-                <div className="relative group">
-                  <p className="text-5xl sm:text-7xl font-black text-white mb-2 tracking-tighter group-hover:text-emerald-400 transition-colors duration-500">
-                    {s.value}
+                <AnimatedStat value={s.value} label={s.label} />
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── TESTIMONIALS ── */}
+      <section className="py-32 px-6 bg-[#f8fafb] dark:bg-[#060b14]">
+        <div className="max-w-7xl mx-auto">
+          <FadeUp className="text-center max-w-xl mx-auto mb-16 space-y-4">
+            <span className="inline-block text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+              From the Field
+            </span>
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+              Trusted by <span className="text-slate-400">institutions.</span>
+            </h2>
+          </FadeUp>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {TESTIMONIALS.map((t, i) => (
+              <FadeUp key={i} delay={i * 0.15}>
+                <motion.div
+                  whileHover={{ y: -6 }}
+                  className="relative p-10 rounded-[2rem] bg-white dark:bg-white/[0.02] border border-slate-200/60 dark:border-white/5 hover:border-emerald-500/20 transition-all duration-500"
+                >
+                  {/* Quote mark */}
+                  <div className="text-6xl font-black text-emerald-500/20 leading-none mb-4 select-none">"</div>
+                  <p className="text-slate-700 dark:text-slate-300 text-base font-medium leading-relaxed mb-8">
+                    {t.quote}
                   </p>
-                  <p className="text-xs sm:text-sm font-bold text-slate-500 uppercase tracking-widest">
-                    {s.label}
-                  </p>
-                  {/* Vertical bar */}
-                  <div className="absolute -left-6 top-0 bottom-0 w-px bg-white/5 hidden md:block" />
-                </div>
+                  <div className="flex items-center gap-4">
+                    <div className="w-11 h-11 rounded-full bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center text-sm font-black text-emerald-700 dark:text-emerald-400">
+                      {t.initials}
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-slate-900 dark:text-white">{t.name}</p>
+                      <p className="text-xs text-slate-400">{t.role}</p>
+                    </div>
+                  </div>
+                </motion.div>
               </FadeUp>
             ))}
           </div>
@@ -288,11 +425,10 @@ const LandingPage = () => {
       <section id="cta" className="py-32 px-6 bg-white dark:bg-[#060b14]">
         <div className="max-w-7xl mx-auto">
           <div className="relative rounded-[3rem] overflow-hidden bg-slate-900 px-8 py-20 md:py-28 text-center shadow-2xl">
-            {/* Background design */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(16,185,129,0.2),transparent_70%)]" />
             <div className="absolute inset-0 opacity-[0.05]"
               style={{ backgroundImage: 'linear-gradient(white 1px,transparent 1px),linear-gradient(90deg,white 1px,transparent 1px)', backgroundSize: '40px 40px' }} />
-            
+
             <div className="relative z-10 max-w-3xl mx-auto space-y-12">
               <FadeUp className="space-y-6">
                 <span className="inline-block text-xs font-bold text-emerald-400 uppercase tracking-[0.3em] px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20">
