@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { motion, useInView, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
-import { Utensils, TrendingUp, ShieldCheck, ArrowRight, Zap, BarChart3, Lock, ChevronRight, BookOpen, Activity, CheckCircle2 } from 'lucide-react';
+import { Utensils, TrendingUp, ShieldCheck, ArrowRight, Zap, BarChart3, Lock, BookOpen, Activity, CheckCircle2 } from 'lucide-react';
 
 /* ── Animated counter hook ── */
 const useCounter = (target, inView, duration = 2000) => {
@@ -20,7 +20,7 @@ const useCounter = (target, inView, duration = 2000) => {
       if (progress < 1) requestAnimationFrame(step);
     };
     requestAnimationFrame(step);
-  }, [inView]);
+  }, [inView, target, duration]);
   return count;
 };
 

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import {
   Utensils, RefreshCcw, Save, Sparkles, Calendar,
-  TrendingUp, ChartBar, Clock, Users, Leaf,
+  TrendingUp, Clock, Users, Leaf,
   ChevronRight, BarChart2
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
