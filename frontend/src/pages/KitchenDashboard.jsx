@@ -13,15 +13,22 @@ import Button from '../components/Button';
 // ── Helpers ─────────────────────────────────────────────────
 const getMealStatus = (mealType) => {
   const now = new Date();
-  const h = now.getHours();
   const RANGES = {
-    breakfast: [7, 9],
-    lunch: [12, 14],
-    dinner: [19, 21],
+    breakfast: { start: { h: 7, m: 30 }, end: { h: 9, m: 0 } },
+    lunch: { start: { h: 12, m: 30 }, end: { h: 14, m: 0 } },
+    snacks: { start: { h: 16, m: 30 }, end: { h: 17, m: 30 } },
+    dinner: { start: { h: 19, m: 30 }, end: { h: 21, m: 0 } },
   };
-  const [start, end] = RANGES[mealType] ?? [0, 0];
-  if (h < start) return 'Upcoming';
-  if (h >= start && h < end) return 'Ongoing';
+  const range = RANGES[mealType];
+  if (!range) return 'Closed';
+
+  const start = new Date();
+  start.setHours(range.start.h, range.start.m, 0, 0);
+  const end = new Date();
+  end.setHours(range.end.h, range.end.m, 0, 0);
+
+  if (now < start) return 'Upcoming';
+  if (now <= end) return 'Ongoing';
   return 'Closed';
 };
 
@@ -34,6 +41,7 @@ const STATUS_STYLES = {
 const MEAL_CONFIG = [
   { id: 'breakfast', label: 'Breakfast', time: '07:30 – 09:00', color: '#F59E0B', accent: 'amber' },
   { id: 'lunch',     label: 'Lunch',     time: '12:30 – 14:00', color: '#10B981', accent: 'emerald' },
+  { id: 'snacks',    label: 'Snacks',    time: '16:30 – 17:30', color: '#64748B', accent: 'slate' },
   { id: 'dinner',    label: 'Dinner',    time: '19:30 – 21:00', color: '#3B82F6', accent: 'blue' },
 ];
 
@@ -105,7 +113,7 @@ const FoodQuantityCard = ({ emoji, label, quantity, unit }) => (
 const KitchenDashboard = () => {
   const navigate = useNavigate();
 
-  const [stats, setStats] = useState({ breakfast: 0, lunch: 0, dinner: 0 });
+  const [stats, setStats] = useState({ breakfast: 0, lunch: 0, snacks: 0, dinner: 0 });
   const [menu, setMenu] = useState({ breakfast: '', lunch: '', snacks: '', dinner: '' });
   const [loading, setLoading] = useState(true);
   const [menuSaving, setMenuSaving] = useState(false);
@@ -129,7 +137,7 @@ const KitchenDashboard = () => {
         mealService.getRotatingMenuToday().catch(() => ({ success: false })),
       ]);
 
-      setStats(statsRes?.success ? statsRes.data : { breakfast: 0, lunch: 0, dinner: 0 });
+      setStats(statsRes?.success ? statsRes.data : { breakfast: 0, lunch: 0, snacks: 0, dinner: 0 });
 
       if (menuRes?.success && menuRes?.data) {
         setMenu({
@@ -331,7 +339,7 @@ const KitchenDashboard = () => {
           title="Today's Meal Bookings"
           description="Live student booking counts for each meal"
         />
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
           {MEAL_CONFIG.map((meal) => (
             <MealCard
               key={meal.id}
@@ -445,7 +453,7 @@ const KitchenDashboard = () => {
               <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wide mb-3">
                 Per Meal Forecast
               </p>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 xl:grid-cols-4 gap-3">
                 {MEAL_CONFIG.map(({ id, label, color }) => (
                   <div
                     key={id}

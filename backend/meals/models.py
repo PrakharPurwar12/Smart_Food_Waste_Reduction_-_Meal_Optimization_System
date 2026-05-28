@@ -7,6 +7,7 @@ class MealBooking(models.Model):
     MEAL_TYPE_CHOICES = (
         ('breakfast', 'Breakfast'),
         ('lunch', 'Lunch'),
+        ('snacks', 'Snacks'),
         ('dinner', 'Dinner'),
     )
     STATUS_CHOICES = (

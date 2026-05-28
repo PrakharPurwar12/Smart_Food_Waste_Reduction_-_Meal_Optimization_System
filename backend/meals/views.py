@@ -15,6 +15,7 @@ from users.permissions import IsKitchen, IsStudentOrKitchen
 MEAL_START_TIMES = {
     'breakfast': (7, 30),
     'lunch': (12, 30),
+    'snacks': (16, 30),
     'dinner': (19, 30),
 }
 
@@ -218,7 +219,7 @@ class MealBookingViewSet(viewsets.ModelViewSet):
             user__college=request.user.college
         ).values('meal_type').annotate(count=Count('id'))
 
-        result = {'breakfast': 0, 'lunch': 0, 'dinner': 0}
+        result = {'breakfast': 0, 'lunch': 0, 'snacks': 0, 'dinner': 0}
         for item in stats:
             result[item['meal_type']] = item['count']
 
