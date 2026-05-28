@@ -43,7 +43,6 @@ const MEAL_CONFIG = [
     start: { h: 16, m: 30 },
     end: { h: 17, m: 30 },
     accent: 'slate',
-    displayOnly: true,
   },
   {
     id: 'dinner',
@@ -219,7 +218,7 @@ const StudentDashboard = () => {
       bookings.filter(
         (b) =>
           b.status === 'booked' &&
-          ['breakfast', 'lunch', 'dinner'].includes(b.meal_type)
+          ['breakfast', 'lunch', 'snacks', 'dinner'].includes(b.meal_type)
       ).length,
     [bookings]
   );
@@ -615,7 +614,7 @@ const StudentDashboard = () => {
                   </span>
                 </div>
                 <span className="text-lg font-bold text-slate-900 dark:text-white">
-                  {bookedMealsCount}/3
+                  {bookedMealsCount}/4
                 </span>
               </div>
 

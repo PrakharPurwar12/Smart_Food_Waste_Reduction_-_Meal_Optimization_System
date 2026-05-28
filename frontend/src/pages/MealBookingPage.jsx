@@ -11,12 +11,14 @@ import mealService from '../services/mealService';
 const MEAL_START_TIMES = {
   breakfast: { h: 7, m: 30 },
   lunch: { h: 12, m: 30 },
+  snacks: { h: 16, m: 30 },
   dinner: { h: 19, m: 30 },
 };
 
 const MEAL_DISPLAY = [
   { id: 'breakfast', name: 'Breakfast', time: '07:30 – 09:00', color: 'text-amber-500' },
   { id: 'lunch',     name: 'Lunch',     time: '12:30 – 14:00', color: 'text-emerald-500' },
+  { id: 'snacks',    name: 'Snacks',    time: '16:30 – 17:30', color: 'text-slate-500' },
   { id: 'dinner',    name: 'Dinner',    time: '19:30 – 21:00', color: 'text-blue-500' },
 ];
 
@@ -62,6 +64,7 @@ const STATUS_STYLES = {
 const MEAL_COLORS = {
   breakfast: 'text-amber-500',
   lunch: 'text-emerald-500',
+  snacks: 'text-slate-500',
   dinner: 'text-blue-500',
 };
 
@@ -260,7 +263,7 @@ const MealBookingPage = () => {
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-500" />
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
           {MEAL_DISPLAY.map((meal) => {
             const booking = getBookingForMeal(meal.id);
             const isBooked = booking?.status === 'booked';
@@ -470,7 +473,7 @@ const MealBookingPage = () => {
                 <div className="shrink-0 text-right">
                   <span className="text-sm font-bold text-slate-700 dark:text-slate-300">
                     {dayBookings.filter((b) => b.status === 'booked').length}
-                    <span className="text-slate-400 font-normal">/3</span>
+                    <span className="text-slate-400 font-normal">/4</span>
                   </span>
                 </div>
               </div>
