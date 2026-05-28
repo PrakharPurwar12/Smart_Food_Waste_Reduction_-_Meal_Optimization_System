@@ -84,7 +84,7 @@ jobs:
         working-directory: ./frontend
         run: npm run build
 
-  docker-build:
+  docker-build-push:
     needs: build
     runs-on: ubuntu-latest
     steps:
